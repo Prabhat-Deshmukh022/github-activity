@@ -43,5 +43,11 @@ youare issues <repository_name>
 
 *Enter full repository name in the "username/repo_name" format*
 
+For in-line documentation -
+
+```bash
+youare help
+```
+
 
 Project URL - https://roadmap.sh/projects/github-user-activity
