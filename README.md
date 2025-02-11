@@ -49,5 +49,6 @@ For in-line documentation -
 youare help
 ```
 
+On-going development to add functionality by integrating more endpoints, and improving performance by caching responses.
 
 Project URL - https://roadmap.sh/projects/github-user-activity
