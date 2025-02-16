@@ -29,8 +29,12 @@
 		"cli-handle-unhandled": "^1.1.2",
 		"cli-meow-help": "^4.0.0",
 		"cli-welcome": "^3.0.1",
+		"dotenv": "^16.4.7",
 		"get-package-json-file": "^2.0.0",
-		"meow": "^13.2.0"
+		"meow": "^13.2.0",
+		"node-cache": "^5.1.2",
+		"nodecache": "^0.0.2",
+		"octokit": "^4.1.2"
 	},
 	"devDependencies": {
 		"prettier": "^3.5.0"

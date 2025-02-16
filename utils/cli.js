@@ -37,6 +37,32 @@ const flags = {
 		type:`string`,
 		default:"",
 		desc:"Issues"
+	},
+	checklimit:{
+		type:`string`,
+		default:"",
+		desc:"checking rate limit of API"
+	},
+	repos:{
+		type:`string`,
+		default:"",
+		desc:"repo info"
+	},
+	commits:{
+		type:`string`,
+		default:"",
+		desc:"to see all commits of a repository"
+	},
+	endSession:{
+		type:"string",
+		default:"",
+		desc:"to clear session"
+	},
+	fordev:{
+		type:`string`,
+		default:"",
+		shortFlag:`d`,
+		desc:"For development"
 	}
 
 };
