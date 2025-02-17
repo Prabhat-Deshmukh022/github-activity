@@ -67,6 +67,13 @@ For in-line documentation -
 youare help
 ```
 
-On-going development to add functionality by integrating more endpoints, and improving performance by caching responses.
+## Technical Aspects
+
+Pagination - Users can now paginate through the responses to various requests, enabling better user experience.
+
+Caching - LRU (Least Recently Used) caching implemented to store results of recent requests, improves response time and works around GitHub APIs rate limiting.
+
+API requests - Used GitHub's own **octokit** to make requests to their APIs various endpoints and arranged the output in an intuitive manner.
+
 
 Project URL - https://roadmap.sh/projects/github-user-activity
