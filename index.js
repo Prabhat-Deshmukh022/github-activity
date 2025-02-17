@@ -90,9 +90,9 @@ const { clear, debug } = flags;
 
     if (input.includes(`help`)) {
         console.log(`
-            Usage: github-activity [options]
+            Usage: youare [options]
 
-            GitHub CLI Tool for fetching user activity, profile details, starred repositories, pull requests, and issues.
+            GitHub CLI Tool for fetching user activity, profile details, starred repositories, pull requests, and more.
 
             Options:
 

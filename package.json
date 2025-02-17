@@ -1,7 +1,7 @@
 {
 	"name": "youare",
 	"description": "displays github activity of user",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"license": "UNLICENSED",
 	"type": "module",
 	"bin": {
