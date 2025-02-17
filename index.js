@@ -5,15 +5,14 @@ import init from './utils/init.js';
 import log from './utils/log.js';
 import dotenv from 'dotenv'
 import { Octokit } from 'octokit';
-import NodeCache from 'node-cache'
 import fs from 'fs'
 
 dotenv.config()
 
-const octokit = new Octokit({})
-const cache = new NodeCache({ stdTTL: 1200, checkperiod: 120 })
+const octokit = new Octokit({ })
 
 const CACHE = './cache.json'
+const MAX_SIZE = 7
 
 function loadCache() {
     try {
@@ -27,11 +26,20 @@ function loadCache() {
         }
     } catch (error) {
         console.log(`ERROR- There has been an error ${error}`);
+        return {}
     }
 }
 
 function saveCache(data) {
-    fs.writeFileSync(CACHE, JSON.stringify(data, null, 2))
+    let entries = Object.entries(data).sort((a,b) => b[1].timestamp - a[1].timestamp)
+
+    if(entries.length > MAX_SIZE){
+        entries = entries.slice(0,MAX_SIZE)
+        console.log(`Implementing LRU`);
+    }
+
+    const updatedCache = Object.fromEntries(entries)
+    fs.writeFileSync(CACHE, JSON.stringify(updatedCache, null, 2))
 }
 
 function formatDate(rawDate) {
@@ -54,21 +62,22 @@ async function fetchWithPagination(endpoint, params, cacheKey) {
 
     if (Object.keys(content).includes(cacheKey)) {
         console.log(`Cache hit!`);
-        return content[cacheKey]
+        content[cacheKey].timestamp = Date.now()
+        saveCache(content)
+        return content[cacheKey]["data"]
     }
 
     try {
         const response = await octokit.request(endpoint, params)
         const data = response.data
 
-        content[cacheKey] = data
+        content[cacheKey] = {data, timestamp: Date.now() }
         saveCache(content)
         return data
     } catch (error) {
         console.error(`ERROR: ${error.message}`)
     }
 }
-
 
 const { flags, input } = cli;
 const { clear, debug } = flags;
@@ -235,6 +244,8 @@ const { clear, debug } = flags;
 
         const issues = await fetchWithPagination("GET /repos/{owner}/{repo}/issues", { owner: inParameter1, repo: inParameter2, per_page: 5, page }, `repo_${repo}_${page}`)
 
+        console.log(issues);
+
         if (issues.length === 0) {
             console.log("✅ No open issues found.");
             return;
@@ -303,6 +314,8 @@ const { clear, debug } = flags;
             per_page: 5,
             page
         }, `repo_${repo}_${page}`)
+
+        // console.log(data);
 
         data.forEach((ele) => {
             console.log(`📜 Message: ${ele.commit.message}`);
